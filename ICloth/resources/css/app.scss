@@ -1,0 +1,39 @@
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+.cabecalho {
+    background-color: #4169E1;
+    font-size: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.titulo {
+    font-family: 'Aladin', cursive;
+    font-size: 2rem;
+}
+
+a{
+    text-decoration: none;
+    color:white;
+}
+
+.link{
+    color: #DAA520; 
+}
+
+.principal{
+    padding-top:40px ;
+}
+
+.tabela{
+    padding-top: 20px;
+}
+
+.tabela{
+    border: 1px solid #DAA520;
+}
+
+.cabecalho-tabela{
+    background-color: #4169E1;
+    color:#DAA520;
+}
