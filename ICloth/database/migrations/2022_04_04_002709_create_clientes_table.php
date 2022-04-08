@@ -18,7 +18,7 @@ class CreateClientesTable extends Migration
             $table->string('nome',50);
             $table->string('cpf',11)->unique();;
             $table->string('telefone',11);
-            $table->string('endereco');
+            $table->string('endereco',80);
         });
     }
 

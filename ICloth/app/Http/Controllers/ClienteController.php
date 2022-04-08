@@ -13,20 +13,18 @@ class ClienteController extends Controller
         $clientes = Cliente::all();
         return view('cliente.tabela',['clientes' => $clientes]);
     }
-
-    
+   
     public function create()
     {
         return view('cliente.create');
     }
 
- 
     public function store(Request $request)
     {
         $request->validate([
             'nome' => 'required|max:50',
             'cpf' => 'required|unique:App\Models\Cliente,cpf|max:11',
-            'endereco' => 'required',
+            'endereco' => 'required|max:80',
             'telefone' => 'required|max:11'
         ]);
 
@@ -40,22 +38,20 @@ class ClienteController extends Controller
         return redirect('cliente');
 
     }
-
-    
+ 
     public function edit($id)
     {
         $cliente = Cliente::findOrFail($id);
 
         return view('cliente.edit',['cliente' => $cliente]);
     }
-
-    
+ 
     public function update(Request $request, $id)
     {
         $request->validate([
             'nome' => 'required|max:50',
             'cpf' => 'required|max:11',
-            'endereco' => 'required',
+            'endereco' => 'required|max:80',
             'telefone' => 'required|max:11'
         ]);
 
@@ -69,7 +65,6 @@ class ClienteController extends Controller
         return redirect('cliente');
 
     }
-
 
     public function destroy($id)
     {

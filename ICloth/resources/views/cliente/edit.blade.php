@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <label for="endereco" class="form-label"> Endereço </label>
-            <input type="text" name="endereco" id="endereco" class="form-control @error('endereco') is-invalid @enderror" value="{{$cliente->endereco}}" required placeholder="Rua xxx,42,Bairro zzz - Cidade">
+            <input type="text" name="endereco" id="endereco" class="form-control @error('endereco') is-invalid @enderror" value="{{$cliente->endereco}}" maxlength="80" required>
             @error('endereco')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror

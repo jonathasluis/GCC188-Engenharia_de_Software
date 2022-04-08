@@ -26,7 +26,7 @@
                     <a class="btn btn-primary" href="{{route('cliente.edit',$cliente->id)}}"><i class="fa-solid fa-pen"></i></a>
                 </td>
                 <td>
-                    <form method="POST" action="{{route('cliente.destroy',$cliente->id)}}">
+                    <form method="POST" action="{{route('cliente.destroy',$cliente->id)}}"  onsubmit="if(!confirm('Tem certeza que deseja remover esse cliente?')){ return false;}">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
