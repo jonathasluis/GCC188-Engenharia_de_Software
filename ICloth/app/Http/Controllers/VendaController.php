@@ -43,27 +43,32 @@ class VendaController extends Controller
         ]);
 
         $venda->save();
-        for($i = 0; $i < count($produtos);$i++){
-            $produto = Produto::findOrFail($produtos[$i]);
-            if($produto->quantidade < $quantidades[$i]){
-                foreach($venda->produtos as $vendaProduto){
-                    $vendaProduto->produto->quantidade += $vendaProduto->quantidade;
-                    $vendaProduto->produto->save();
+        if($produtos != null){
+            for($i = 0; $i < count($produtos);$i++){
+                $produto = Produto::findOrFail($produtos[$i]);
+                if($produto->quantidade < $quantidades[$i]){
+                    foreach($venda->produtos as $vendaProduto){
+                        $vendaProduto->produto->quantidade += $vendaProduto->quantidade;
+                        $vendaProduto->produto->save();
+                    }
+                    $venda->delete();
+                    return back()->withInput()->withErrors("O produto {$produto->nome} possui apenas {$produto->quantidade} unidades");
                 }
-                $venda->delete();
-                return back()->withInput()->withErrors("O produto {$produto->nome} possui apenas {$produto->quantidade} unidades");
-            }
-            
-            $produto->quantidade -= $quantidades[$i];
-            $produto->save();
-            
-            $valor += $produto->preco * $quantidades[$i];
+                
+                $produto->quantidade -= $quantidades[$i];
+                $produto->save();
+                
+                $valor += $produto->preco * $quantidades[$i];
 
-            ProdutoVenda::create([
-                'quantidade' => $quantidades[$i],
-                'venda_id' => $venda->id,
-                'produto_id' => $produto->id
-            ]);
+                ProdutoVenda::create([
+                    'quantidade' => $quantidades[$i],
+                    'venda_id' => $venda->id,
+                    'produto_id' => $produto->id
+                ]);
+            }
+        } else {
+            $venda->delete();
+            return back()->withInput()->withErrors("Selecione pelo menos um produto!");
         }
 
         $venda->valor = $valor;
@@ -93,29 +98,33 @@ class VendaController extends Controller
         $venda = Venda::findOrFail($id);
         $venda->data = $request->get('data');
         $venda->cliente_id = $request->get('cliente');
-      
-        foreach($venda->produtos as $vendaProduto){
-            $vendaProduto->produto->quantidade += $vendaProduto->quantidade;
-            $vendaProduto->produto->save();
-            $vendaProduto->delete();
-        }
 
-        for($i = 0; $i < count($produtos);$i++){
-            $produto = Produto::findOrFail($produtos[$i]);
-            if($produto->quantidade < $quantidades[$i]){   
-                return back()->withInput()->withErrors("O produto {$produto->nome} possui apenas {$produto->quantidade} unidades");
+        if($produtos != null){
+            foreach($venda->produtos as $vendaProduto){
+                $vendaProduto->produto->quantidade += $vendaProduto->quantidade;
+                $vendaProduto->produto->save();
+                $vendaProduto->delete();
             }
-            
-            $produto->quantidade -= $quantidades[$i];
-            $produto->save();
-            
-            $valor += $produto->preco * $quantidades[$i];
 
-            ProdutoVenda::create([
-                'quantidade' => $quantidades[$i],
-                'venda_id' => $venda->id,
-                'produto_id' => $produto->id
-            ]);
+            for($i = 0; $i < count($produtos);$i++){
+                $produto = Produto::findOrFail($produtos[$i]);
+                if($produto->quantidade < $quantidades[$i]){   
+                    return back()->withInput()->withErrors("O produto {$produto->nome} possui apenas {$produto->quantidade} unidades");
+                }
+                
+                $produto->quantidade -= $quantidades[$i];
+                $produto->save();
+                
+                $valor += $produto->preco * $quantidades[$i];
+
+                ProdutoVenda::create([
+                    'quantidade' => $quantidades[$i],
+                    'venda_id' => $venda->id,
+                    'produto_id' => $produto->id
+                ]);
+            }
+        }else{
+            return back()->withInput()->withErrors("Selecione pelo menos um produto!");
         }
 
         $venda->valor = $valor;
@@ -127,6 +136,13 @@ class VendaController extends Controller
     public function destroy($id)
     {
         $venda = Venda::findOrFail($id);
+
+        foreach($venda->produtos as $vendaProduto){
+            $vendaProduto->produto->quantidade += $vendaProduto->quantidade;
+            $vendaProduto->produto->save();
+            $vendaProduto->delete();
+        }
+        
         $venda->delete();
         return redirect('venda');
     }

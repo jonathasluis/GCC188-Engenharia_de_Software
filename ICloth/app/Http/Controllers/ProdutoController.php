@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Produto;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -73,7 +74,12 @@ class ProdutoController extends Controller
 
     public function destroy($id)
     {
-        Produto::destroy($id);
+        try{
+            Produto::destroy($id);  
+        }catch(QueryException $e){
+            return back()->withInput()->withErrors("Produto cadastrado em uma venda, não é possível excluir!");
+        }
+        
         return redirect('produto');
     }
 }

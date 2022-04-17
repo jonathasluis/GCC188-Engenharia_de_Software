@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use Illuminate\Database\QueryException;
 
 class ClienteController extends Controller
 {
@@ -68,7 +69,11 @@ class ClienteController extends Controller
 
     public function destroy($id)
     {
-        Cliente::destroy($id);
+        try{
+            Cliente::destroy($id);
+        }catch (QueryException $e){
+            return back()->withInput()->withErrors("Cliente cadastrado em uma venda, não é possível excluir!");
+        }
         return redirect('cliente');
     }
 }

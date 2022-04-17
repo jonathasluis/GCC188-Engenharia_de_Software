@@ -1,4 +1,8 @@
 <x-app>
+    @if($errors->any())
+    <h4 class="alert alert-danger">{{$errors->first()}}</h4>
+    @endif
+
     <div class="d-grid gap-3">
     <div class="container row">
         <a href="{{route('produto.create')}}" class="btn btn-success col-1"><i class="fa-solid fa-plus align-middle"></i></a>
