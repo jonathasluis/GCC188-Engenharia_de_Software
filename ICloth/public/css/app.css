@@ -3066,3 +3066,20 @@ a {
 .invisivel {
   display: none;
 }
+
+.registro {
+  background-color: #4169E1;
+  color: #DAA520;
+  text-align: center;
+  font-size: 5rem;
+  font-family: "Aladin", cursive;
+}
+
+.alturaMaxima {
+  height: 100%;
+}
+
+.btn-login {
+  background-color: #4169E1;
+  color: white;
+}

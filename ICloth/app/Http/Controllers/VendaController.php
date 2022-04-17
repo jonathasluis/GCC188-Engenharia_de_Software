@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Produto;
 use App\Models\ProdutoVenda;
 use App\Models\Venda;
+use Illuminate\Support\Facades\Auth;
 
 class VendaController extends Controller
 {
@@ -38,7 +39,7 @@ class VendaController extends Controller
         $venda = new Venda([
             'data' => $request->get('data'),
             'cliente_id' => $request->get('cliente'),
-            'user_id' => 1,
+            'user_id' => Auth::user()->id,
             'valor' => 0
         ]);
 

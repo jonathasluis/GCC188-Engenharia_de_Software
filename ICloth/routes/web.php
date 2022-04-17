@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendaController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,12 @@ use App\Http\Controllers\VendaController;
 
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->middleware(['auth'])->name('home');
 
 
-Route::resource('cliente', ClienteController::class)->except(['show']);
-Route::resource('produto', ProdutoController::class)->except(['show']);
-Route::resource('venda', VendaController::class)->except(['show']);
+Route::resource('cliente', ClienteController::class)->except(['show'])->middleware(['auth']);
+Route::resource('produto', ProdutoController::class)->except(['show'])->middleware(['auth']);
+Route::resource('venda', VendaController::class)->except(['show'])->middleware(['auth']);
+Route::resource('usuario', UserController::class)->only(['index'])->middleware(['auth']);
+
+require __DIR__.'/auth.php';
