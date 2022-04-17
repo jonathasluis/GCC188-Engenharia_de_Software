@@ -25,7 +25,7 @@
                 <td>{{$produto->quantidade}}</td>
                 <td>{{$produto->marca}}</td>
                 <td>{{$produto->preco}}</td>
-                <td>{{$produto->categoria}}</td>
+                <td>{{$produto->categoria->nome}}</td>
                 <td>
                     <a class="btn btn-primary" href="{{route('produto.edit',$produto->id)}}"><i class="fa-solid fa-pen"></i></a>
                 </td>

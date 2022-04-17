@@ -38,15 +38,25 @@
 
         <div class="mb-3">
             <label for="categoria" class="form-label"> Categoria </label>
-            <input type="text" name="categoria" id="categoria" class="form-control @error('categoria') is-invalid @enderror" value="{{$produto->categoria}}" required>
-            @error('categoria')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        
+            <select name="categoria" id="categoria" class="form-select @error('categoria') is-invalid @enderror" required>
+                @foreach($categorias as $categoria)
+                    @if($categoria->id == $produto->categoria_id)
+                        <option value="{{$categoria->id}}" selected>
+                            {{$categoria->nome}}
+                        </option>
+                    @else
+                        <option value="{{$categoria->id}}">
+                            {{$categoria->nome}}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+                @error('categoria')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+        </div>     
         <div class="form-group">
             <button class="btn btn-success" type="submit">Salvar</button>
         </div>
-
     </form>
 </x-app>

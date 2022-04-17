@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\VendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('/', function () {
 
 Route::resource('cliente', ClienteController::class)->except(['show']);
 Route::resource('produto', ProdutoController::class)->except(['show']);
+Route::resource('venda', VendaController::class)->except(['show']);

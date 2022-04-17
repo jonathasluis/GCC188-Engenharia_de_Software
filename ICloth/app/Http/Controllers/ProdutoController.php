@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,8 @@ class ProdutoController extends Controller
 
     public function create()
     {
-        return view('produto.create');
+        $categorias = Categoria::all();
+        return view('produto.create',['categorias' => $categorias]);
     }
 
     public function store(Request $request)
@@ -27,7 +29,7 @@ class ProdutoController extends Controller
             'quantidade' => 'required',
             'marca' => 'required|max:20',
             'preco' => 'required',
-            'categoria' => 'required|max:20'
+            'categoria' => 'required'
         ]);
 
         Produto::create([
@@ -35,7 +37,7 @@ class ProdutoController extends Controller
             'quantidade' => $request->get('quantidade'),
             'marca' => $request->get('marca'),
             'preco' => $request->get('preco'),
-            'categoria' => $request->get('categoria'),
+            'categoria_id' => $request->get('categoria'),
         ]);
 
         return redirect('produto');
@@ -44,8 +46,8 @@ class ProdutoController extends Controller
     public function edit($id)
     {
         $produtos = Produto::findOrFail($id);
-
-        return view('produto.edit',['produto' => $produtos]);
+        $categorias = Categoria::all();
+        return view('produto.edit',['produto' => $produtos,'categorias' => $categorias]);
     }
 
     public function update(Request $request, $id)
@@ -55,7 +57,7 @@ class ProdutoController extends Controller
             'quantidade' => 'required',
             'marca' => 'required|max:20',
             'preco' => 'required',
-            'categoria' => 'required|max:20'
+            'categoria' => 'required'
         ]);
 
         $produtos = Produto::findOrFail($id);
@@ -63,7 +65,7 @@ class ProdutoController extends Controller
         $produtos->quantidade = $request->get('quantidade');
         $produtos->marca = $request->get('marca');
         $produtos->preco = $request->get('preco');
-        $produtos->categoria = $request->get('categoria');
+        $produtos->categoria_id = $request->get('categoria');
         $produtos->save();
 
         return redirect('produto');

@@ -11,5 +11,9 @@ class Produto extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['nome','quantidade','marca','preco','categoria'];
+    protected $fillable = ['nome','quantidade','marca','preco','categoria_id'];
+
+    public function categoria(){
+        return $this->belongsTo(Categoria::class);
+    }
 }
