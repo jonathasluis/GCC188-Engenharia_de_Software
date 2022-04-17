@@ -24,6 +24,7 @@
         <div class="mb-3">
             <button class="btn btn-login col-12 mb-3" type="submit">Logar</button>
             <a class="btn btn-login col-12" href="{{route('register')}}"> Registrar </a>
+            <a class="link" href="{{route('password.request')}}"> Esqueci minha senha </a>
         </div>
     </form>
 </x-registro>
