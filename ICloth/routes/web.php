@@ -25,6 +25,6 @@ Route::get('/', function () {
 Route::resource('cliente', ClienteController::class)->except(['show'])->middleware(['auth']);
 Route::resource('produto', ProdutoController::class)->except(['show'])->middleware(['auth']);
 Route::resource('venda', VendaController::class)->except(['show'])->middleware(['auth']);
-Route::resource('usuario', UserController::class)->only(['index'])->middleware(['auth']);
+Route::resource('usuario', UserController::class)->only(['index','store'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
