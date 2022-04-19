@@ -8,7 +8,7 @@ O sistema ICloth tem como objetivo sanar o problema de controle de vendas e esto
     <ul>
         <li>PHP 8.0 - A linguagem usada</li>
         <li>Laravel 9 - O framework usado</li> 
-        <li>MySQL 8.0.25 (MySQL Community Server - GLP) - O SGBD</li>
+        <li>Postgres 14 - O banco de dados</li>
     </ul>
 
 ## Autores:
